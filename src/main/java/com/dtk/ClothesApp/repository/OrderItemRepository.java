@@ -1,12 +1,13 @@
 package com.dtk.ClothesApp.repository;
 
-import com.dtk.ClothesApp.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import com.dtk.ClothesApp.domain.entity.OrderItem;
+
 @Repository
-public interface UserRepository extends
-                JpaRepository<User, String>, JpaSpecificationExecutor<User> {
-        boolean existsByEmail(String email);
+public interface OrderItemRepository extends
+        JpaRepository<OrderItem, String>, JpaSpecificationExecutor<OrderItem> {
+
 }

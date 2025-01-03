@@ -24,8 +24,11 @@ public class User {
     @NotBlank(message = "Email name could not be blank")
     private String email;
 
+    @Column(nullable = false)
     private String fullName;
-    private String role;
+
+    @Column(nullable = false)
+    private String role = "BUYER";
 
     @Column(nullable = false)
     private String password;
