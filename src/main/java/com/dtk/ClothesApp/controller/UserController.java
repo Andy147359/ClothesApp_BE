@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dtk.ClothesApp.domain.entity.User;
-import com.dtk.ClothesApp.domain.request.CreateUserRequest;
-import com.dtk.ClothesApp.domain.request.UpdateUserRequest;
+import com.dtk.ClothesApp.domain.request.User.CreateUserRequest;
+import com.dtk.ClothesApp.domain.request.User.UpdateUserRequest;
 import com.dtk.ClothesApp.domain.response.User.CreateUserResponse;
 import com.dtk.ClothesApp.domain.response.User.UserResponse;
 import com.dtk.ClothesApp.service.UserService;

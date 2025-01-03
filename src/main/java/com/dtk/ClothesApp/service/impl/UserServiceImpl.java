@@ -2,8 +2,8 @@ package com.dtk.ClothesApp.service.impl;
 
 import com.dtk.ClothesApp.domain.entity.User;
 import com.dtk.ClothesApp.domain.mapper.UserMapper;
-import com.dtk.ClothesApp.domain.request.CreateUserRequest;
-import com.dtk.ClothesApp.domain.request.UpdateUserRequest;
+import com.dtk.ClothesApp.domain.request.User.CreateUserRequest;
+import com.dtk.ClothesApp.domain.request.User.UpdateUserRequest;
 import com.dtk.ClothesApp.domain.response.User.CreateUserResponse;
 import com.dtk.ClothesApp.domain.response.User.UserResponse;
 import com.dtk.ClothesApp.repository.UserRepository;
@@ -61,6 +61,13 @@ public class UserServiceImpl implements UserService {
                 .filter(u -> !u.isDeleted())
                 .orElseThrow(() -> new IdInvalidExceptionHandler("User not found with id: " + id));
         return userMapper.userToUserResponse(user);
+    }
+
+    // Get User By Email
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IdInvalidExceptionHandler("User not found with email: " + email));
     }
 
     // Update User
