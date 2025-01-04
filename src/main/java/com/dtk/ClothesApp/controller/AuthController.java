@@ -1,8 +1,8 @@
 package com.dtk.ClothesApp.controller;
 
+import com.dtk.ClothesApp.domain.request.Auth.LoginRequest;
+import com.dtk.ClothesApp.domain.request.Auth.ResetPasswordRequest;
 import com.dtk.ClothesApp.domain.request.User.CreateUserRequest;
-import com.dtk.ClothesApp.domain.request.auth.LoginRequest;
-import com.dtk.ClothesApp.domain.request.auth.ResetPasswordRequest;
 import com.dtk.ClothesApp.domain.response.Auth.AuthResponse;
 import com.dtk.ClothesApp.service.AuthService;
 

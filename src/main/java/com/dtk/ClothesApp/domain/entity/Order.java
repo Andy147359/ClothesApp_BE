@@ -28,7 +28,7 @@ public class Order {
 
     private BigDecimal totalAmount;
     private BigDecimal shippingCost;
-    private String status; // pedding, success
+    private String status = "pendding"; // pendding, completed, cancelled
     private String address;
 
     @ManyToOne

@@ -1,4 +1,4 @@
-package com.dtk.ClothesApp.domain.request.auth;
+package com.dtk.ClothesApp.domain.request.Auth;
 
 import lombok.Data;
 
