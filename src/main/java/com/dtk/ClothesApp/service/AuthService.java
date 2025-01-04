@@ -3,7 +3,7 @@ package com.dtk.ClothesApp.service;
 import com.dtk.ClothesApp.domain.request.User.CreateUserRequest;
 import com.dtk.ClothesApp.domain.request.auth.LoginRequest;
 import com.dtk.ClothesApp.domain.request.auth.ResetPasswordRequest;
-import com.dtk.ClothesApp.domain.response.auth.AuthResponse;
+import com.dtk.ClothesApp.domain.response.Auth.AuthResponse;
 
 public interface AuthService {
     // User Login

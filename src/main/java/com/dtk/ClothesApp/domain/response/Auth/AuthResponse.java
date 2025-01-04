@@ -1,4 +1,4 @@
-package com.dtk.ClothesApp.domain.response.auth;
+package com.dtk.ClothesApp.domain.response.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
