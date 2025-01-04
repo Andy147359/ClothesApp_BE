@@ -1,6 +1,7 @@
 package com.dtk.ClothesApp.controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
@@ -13,6 +14,7 @@ import com.dtk.ClothesApp.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,8 +25,16 @@ public class ProductController {
 
     // Create Product
     @PostMapping
-    public ResponseEntity<CreateProductResponse> create(@Valid @RequestBody CreateProductRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(request));
+    public ResponseEntity<CreateProductResponse> createProduct(
+            @RequestParam("name") String name,
+            @RequestParam("price") BigDecimal price,
+            @RequestParam(value = "discountPrice", required = false) BigDecimal discountPrice,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("imageFile") MultipartFile imageFile) {
+        CreateProductResponse response = productService.createProduct(
+                name, price, discountPrice, description, stock, imageFile);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // Get All Products

@@ -7,16 +7,18 @@ import com.dtk.ClothesApp.domain.request.product.UpdateProductRequest;
 import com.dtk.ClothesApp.domain.response.Product.CreateProductResponse;
 import com.dtk.ClothesApp.domain.response.Product.ProductResponse;
 import com.dtk.ClothesApp.repository.ProductRepository;
+import com.dtk.ClothesApp.service.CloudStorageService;
 import com.dtk.ClothesApp.service.ProductService;
 import com.dtk.ClothesApp.util.exception.IdInvalidExceptionHandler;
-import com.dtk.ClothesApp.util.exception.ResourceAlreadyExistsException;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,18 +27,38 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final CloudStorageService cloudStorageService;
 
     @Override
     @Transactional
-    public CreateProductResponse createProduct(@Valid CreateProductRequest productRequest) {
-        if (productRepository.findByName(productRequest.getName()).isPresent()) {
-            throw new ResourceAlreadyExistsException("Product already exists with name: " + productRequest.getName());
-        }
+    public CreateProductResponse createProduct(
+            String name, BigDecimal price, BigDecimal discountPrice,
+            String description,
+            Integer stock, MultipartFile imageFile) {
+        // Upload ảnh lên Cloudinary
+        String imageUrl = cloudStorageService.uploadFile(imageFile);
 
-        Product product = productMapper.createProductRequestToProduct(productRequest);
-        product.setDeleted(false);
+        // Tạo Product
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setDiscountPrice(discountPrice);
+        product.setDescription(description);
+        product.setStock(stock);
+        product.setImageUrl(imageUrl);
+
+        // Lưu vào DB
         Product savedProduct = productRepository.save(product);
-        return productMapper.productToCreateProductResponse(savedProduct);
+
+        // Trả về response
+        return new CreateProductResponse(
+                savedProduct.getId(),
+                savedProduct.getName(),
+                savedProduct.getPrice(),
+                savedProduct.getDiscountPrice(),
+                savedProduct.getDescription(),
+                savedProduct.getStock(),
+                savedProduct.getImageUrl());
     }
 
     @Override

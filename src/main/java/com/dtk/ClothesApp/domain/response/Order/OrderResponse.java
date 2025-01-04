@@ -12,7 +12,6 @@ public class OrderResponse {
     private BigDecimal shippingCost;
     private String status;
     private String address;
-
     private UserResponse user;
     private List<OrderItemResponse> orderItems;
 

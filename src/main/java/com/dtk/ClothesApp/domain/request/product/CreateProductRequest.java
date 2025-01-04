@@ -20,5 +20,4 @@ public class CreateProductRequest {
     @NotNull(message = "Stock is required")
     private int stock;
 
-    private String imageUrl;
 }

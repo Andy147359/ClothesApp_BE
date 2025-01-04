@@ -38,7 +38,6 @@ public class OrderServiceImpl implements OrderService {
         // Tạo đối tượng Order
         Order order = orderMapper.createOrderRequestToOrder(request);
         order.setUser(user);
-
         // Lưu Order trước để có ID
         Order savedOrder = orderRepository.save(order);
 
@@ -47,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
             Product product = productRepository.findById(orderItemRequest.getProductId())
                     .orElseThrow(() -> new IdInvalidExceptionHandler(
                             "Product not found with id: " + orderItemRequest.getProductId()));
-
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setQuantity(orderItemRequest.getQuantity());
@@ -57,7 +55,6 @@ public class OrderServiceImpl implements OrderService {
 
         // Gán lại danh sách OrderItems vào Order để hiển thị ra api
         savedOrder.setOrderItems(orderItems);
-
         return orderMapper.orderToOrderResponse(savedOrder);
     }
 

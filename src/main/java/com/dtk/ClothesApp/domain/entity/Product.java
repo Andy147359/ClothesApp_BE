@@ -36,7 +36,7 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
-    private int stock = 0;
+    private Integer stock = 0;
     private String imageUrl;
     private boolean isDeleted = false;
 
