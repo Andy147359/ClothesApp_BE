@@ -19,14 +19,19 @@ public class CloudinaryServiceImpl implements CloudStorageService {
     @Override
     public String uploadFile(MultipartFile file) {
         try {
+
             // Thêm tham số "folder" vào cấu hình upload
             Map<String, Object> uploadParams = ObjectUtils.asMap(
                     "folder", "ClothesApp");
 
+            // Thực hiện upload
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+
             return uploadResult.get("secure_url").toString();
         } catch (IOException e) {
+            System.err.println("Failed to upload file to Cloudinary: " + e.getMessage());
             throw new RuntimeException("Failed to upload file to Cloudinary", e);
         }
     }
+
 }

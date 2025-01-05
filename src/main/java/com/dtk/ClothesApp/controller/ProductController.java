@@ -26,12 +26,12 @@ public class ProductController {
     // Create Product
     @PostMapping
     public ResponseEntity<CreateProductResponse> createProduct(
-            @RequestParam("name") String name,
-            @RequestParam("price") BigDecimal price,
-            @RequestParam(value = "discountPrice", required = false) BigDecimal discountPrice,
-            @RequestParam(value = "description", required = false) String description,
-            @RequestParam("stock") Integer stock,
-            @RequestParam("imageFile") MultipartFile imageFile) {
+            @RequestParam String name,
+            @RequestParam BigDecimal price,
+            @RequestParam(required = false) BigDecimal discountPrice,
+            @RequestParam(required = false) String description,
+            @RequestParam Integer stock,
+            @RequestParam MultipartFile imageFile) {
         CreateProductResponse response = productService.createProduct(
                 name, price, discountPrice, description, stock, imageFile);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

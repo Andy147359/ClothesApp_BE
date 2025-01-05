@@ -25,5 +25,7 @@ public interface ProductService {
 
     ProductResponse updateProduct(String id, @Valid UpdateProductRequest product);
 
+    ProductResponse updateProductStock(String id, int stock);
+
     void deleteProduct(String id);
 }

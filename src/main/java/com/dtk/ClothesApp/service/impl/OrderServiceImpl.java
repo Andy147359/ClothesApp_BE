@@ -12,6 +12,7 @@ import com.dtk.ClothesApp.repository.OrderRepository;
 import com.dtk.ClothesApp.repository.ProductRepository;
 import com.dtk.ClothesApp.repository.UserRepository;
 import com.dtk.ClothesApp.service.OrderService;
+import com.dtk.ClothesApp.service.ProductService;
 import com.dtk.ClothesApp.util.exception.IdInvalidExceptionHandler;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
     private final OrderItemRepository orderItemRepository;
+    private final ProductService productService;
 
     @Override
     @Transactional
@@ -46,6 +48,14 @@ public class OrderServiceImpl implements OrderService {
             Product product = productRepository.findById(orderItemRequest.getProductId())
                     .orElseThrow(() -> new IdInvalidExceptionHandler(
                             "Product not found with id: " + orderItemRequest.getProductId()));
+
+            // Trừ số lượng sản phẩm trong kho
+            int stockRemain = product.getStock() - orderItemRequest.getQuantity();
+            if (stockRemain < 0) {
+                throw new RuntimeException("Not enough stock for product: " + product.getName());
+            }
+            productService.updateProductStock(product.getId(), stockRemain);
+
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setQuantity(orderItemRequest.getQuantity());
@@ -76,7 +86,20 @@ public class OrderServiceImpl implements OrderService {
     public void cancelOrder(String id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Order not found with id: " + id));
+
+        if (order.getStatus().equals("cancelled") || order.getStatus().equals("completed")) {
+            throw new RuntimeException("Order has been cancelled or completed");
+        }
+
         order.setStatus("cancelled");
+
+        // Trả lại số lượng sản phẩm vào kho
+        order.getOrderItems().forEach(orderItem -> {
+            Product product = orderItem.getProduct();
+            int stockRemain = product.getStock() + orderItem.getQuantity();
+            productService.updateProductStock(product.getId(), stockRemain);
+        });
+
         orderRepository.save(order);
     }
 

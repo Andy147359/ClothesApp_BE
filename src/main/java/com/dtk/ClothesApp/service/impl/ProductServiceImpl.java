@@ -107,6 +107,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    public ProductResponse updateProductStock(String id, int stock) {
+        Product product = productRepository.findById(id)
+                .filter(p -> !p.isDeleted())
+                .orElseThrow(() -> new IdInvalidExceptionHandler("Product not found with id: " + id));
+        product.setStock(stock);
+        Product updatedProduct = productRepository.save(product);
+        return productMapper.productToProductResponse(updatedProduct);
+    }
+
+    @Override
+    @Transactional
     public void deleteProduct(String id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Product not found with id: " + id));
