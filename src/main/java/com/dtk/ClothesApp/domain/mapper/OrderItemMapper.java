@@ -7,8 +7,5 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
-    @Mapping(source = "product.id", target = "product.id")
-    @Mapping(source = "product.name", target = "product.name")
-    @Mapping(source = "product.price", target = "product.price")
     OrderItemResponse orderItemToOrderItemResponse(OrderItem orderItem);
 }

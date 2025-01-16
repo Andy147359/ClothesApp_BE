@@ -14,5 +14,6 @@ public class CreateProductResponse {
     private BigDecimal discountPrice;
     private String description;
     private Integer stock;
+    private String category;
     private String imageUrl;
 }

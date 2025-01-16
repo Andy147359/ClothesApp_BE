@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ProductService {
     CreateProductResponse createProduct(
             String name, BigDecimal price, BigDecimal discountPrice, String description,
-            Integer stock, MultipartFile imageFile);
+            Integer stock, String category, MultipartFile imageFile);
 
     List<ProductResponse> getAllProducts();
 

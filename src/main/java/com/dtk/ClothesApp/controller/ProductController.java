@@ -31,9 +31,10 @@ public class ProductController {
             @RequestParam(required = false) BigDecimal discountPrice,
             @RequestParam(required = false) String description,
             @RequestParam Integer stock,
+            @RequestParam String category,
             @RequestParam MultipartFile imageFile) {
         CreateProductResponse response = productService.createProduct(
-                name, price, discountPrice, description, stock, imageFile);
+                name, price, discountPrice, description, stock, category, imageFile);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

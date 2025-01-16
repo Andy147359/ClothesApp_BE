@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     public CreateProductResponse createProduct(
             String name, BigDecimal price, BigDecimal discountPrice,
             String description,
-            Integer stock, MultipartFile imageFile) {
+            Integer stock, String category, MultipartFile imageFile) {
         // Upload ảnh lên Cloudinary
         String imageUrl = cloudStorageService.uploadFile(imageFile);
 
@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDiscountPrice(discountPrice);
         product.setDescription(description);
         product.setStock(stock);
+        product.setCategory(category);
         product.setImageUrl(imageUrl);
 
         // Lưu vào DB
@@ -58,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
                 savedProduct.getDiscountPrice(),
                 savedProduct.getDescription(),
                 savedProduct.getStock(),
+                savedProduct.getCategory(),
                 savedProduct.getImageUrl());
     }
 

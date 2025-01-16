@@ -40,6 +40,8 @@ public class Product {
     private String imageUrl;
     private boolean isDeleted = false;
 
+    private String category;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<CartItem> cartItems;
