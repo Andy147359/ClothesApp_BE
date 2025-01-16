@@ -23,7 +23,10 @@ public interface ProductService {
 
     ProductResponse getProductByName(String name);
 
-    ProductResponse updateProduct(String id, @Valid UpdateProductRequest product);
+    ProductResponse updateProduct(
+            String id,
+            String name, BigDecimal price, BigDecimal discountPrice, String description,
+            Integer stock, String category, MultipartFile imageFile);
 
     ProductResponse updateProductStock(String id, int stock);
 

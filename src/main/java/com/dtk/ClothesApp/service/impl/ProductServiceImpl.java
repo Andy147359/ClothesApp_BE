@@ -90,22 +90,36 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponse updateProduct(String id, @Valid UpdateProductRequest productRequest) {
+    public ProductResponse updateProduct(
+            String id,
+            String name, BigDecimal price, BigDecimal discountPrice, String description,
+            Integer stock, String category, MultipartFile imageFile) {
+        // Tìm sản phẩm theo ID
         Product product = productRepository.findById(id)
                 .filter(p -> !p.isDeleted())
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Product not found with id: " + id));
 
-        // Update fields
-        product.setName(productRequest.getName());
-        product.setPrice(productRequest.getPrice());
-        product.setDiscountPrice(productRequest.getDiscountPrice());
-        product.setDescription(productRequest.getDescription());
-        product.setStock(productRequest.getStock());
-        product.setImageUrl(productRequest.getImageUrl());
+        // Upload ảnh mới lên Cloudinary (nếu có)
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imageUrl = cloudStorageService.uploadFile(imageFile);
+            product.setImageUrl(imageUrl);
+        }
 
+        // Cập nhật các thông tin sản phẩm
+        product.setName(name);
+        product.setPrice(price);
+        product.setDiscountPrice(discountPrice);
+        product.setDescription(description);
+        product.setStock(stock);
+        product.setCategory(category);
+
+        // Lưu lại vào DB
         Product updatedProduct = productRepository.save(product);
+
+        // Trả về response
         return productMapper.productToProductResponse(updatedProduct);
     }
+
 
     @Override
     @Transactional

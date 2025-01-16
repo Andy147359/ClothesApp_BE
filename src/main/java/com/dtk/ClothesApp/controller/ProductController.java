@@ -54,8 +54,16 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> update(
             @PathVariable String id,
-            @Valid @RequestBody UpdateProductRequest request) {
-        return ResponseEntity.ok(productService.updateProduct(id, request));
+            @RequestParam String name,
+            @RequestParam BigDecimal price,
+            @RequestParam(required = false) BigDecimal discountPrice,
+            @RequestParam(required = false) String description,
+            @RequestParam Integer stock,
+            @RequestParam String category,
+            @RequestParam MultipartFile imageFile) {
+        return ResponseEntity.ok(productService.updateProduct(
+                id, name, price, discountPrice, description, stock, category, imageFile
+        ));
     }
 
     // Delete Product
