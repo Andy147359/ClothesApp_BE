@@ -6,11 +6,13 @@ import com.dtk.ClothesApp.domain.response.Product.CreateProductResponse;
 import com.dtk.ClothesApp.domain.response.Product.ProductResponse;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     Product createProductRequestToProduct(CreateProductRequest request);
 
+    @Mapping(source = "category", target = "category")
     ProductResponse productToProductResponse(Product product);
 
     CreateProductResponse productToCreateProductResponse(Product product);

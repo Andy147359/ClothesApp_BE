@@ -1,5 +1,6 @@
 package com.dtk.ClothesApp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
@@ -60,7 +62,7 @@ public class ProductController {
             @RequestParam(required = false) String description,
             @RequestParam Integer stock,
             @RequestParam String category,
-            @RequestParam MultipartFile imageFile) {
+            @RequestParam(required = false) MultipartFile imageFile) {
         return ResponseEntity.ok(productService.updateProduct(
                 id, name, price, discountPrice, description, stock, category, imageFile
         ));

@@ -2,8 +2,6 @@ package com.dtk.ClothesApp.service.impl;
 
 import com.dtk.ClothesApp.domain.entity.Product;
 import com.dtk.ClothesApp.domain.mapper.ProductMapper;
-import com.dtk.ClothesApp.domain.request.product.CreateProductRequest;
-import com.dtk.ClothesApp.domain.request.product.UpdateProductRequest;
 import com.dtk.ClothesApp.domain.response.Product.CreateProductResponse;
 import com.dtk.ClothesApp.domain.response.Product.ProductResponse;
 import com.dtk.ClothesApp.repository.ProductRepository;
@@ -12,9 +10,9 @@ import com.dtk.ClothesApp.service.ProductService;
 import com.dtk.ClothesApp.util.exception.IdInvalidExceptionHandler;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -123,13 +122,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponse updateProductStock(String id, int stock) {
+    public void updateProductStock(String id, int stock) {
         Product product = productRepository.findById(id)
                 .filter(p -> !p.isDeleted())
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Product not found with id: " + id));
         product.setStock(stock);
         Product updatedProduct = productRepository.save(product);
-        return productMapper.productToProductResponse(updatedProduct);
+        productMapper.productToProductResponse(updatedProduct);
     }
 
     @Override

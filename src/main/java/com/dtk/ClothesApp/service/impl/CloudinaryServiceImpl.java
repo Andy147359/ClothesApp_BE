@@ -19,7 +19,6 @@ public class CloudinaryServiceImpl implements CloudStorageService {
     @Override
     public String uploadFile(MultipartFile file) {
         try {
-
             // Thêm tham số "folder" vào cấu hình upload
             Map<String, Object> uploadParams = ObjectUtils.asMap(
                     "folder", "ClothesApp");

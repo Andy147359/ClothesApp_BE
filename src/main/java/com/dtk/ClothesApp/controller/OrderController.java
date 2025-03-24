@@ -22,9 +22,9 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(request));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<OrderResponse>> getOrdersByUser(@PathVariable String userId) {
-        return ResponseEntity.ok(orderService.getOrdersByUser(userId));
+    @GetMapping("/user")
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")

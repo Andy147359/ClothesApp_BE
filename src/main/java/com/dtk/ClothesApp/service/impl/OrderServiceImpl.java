@@ -69,11 +69,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponse> getOrdersByUser(String userId) {
-        return orderRepository.findOrdersByUserId(userId).stream()
+    public List<OrderResponse> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream()
                 .map(orderMapper::orderToOrderResponse)
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public OrderResponse getOrderById(String id) {
@@ -87,11 +90,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Order not found with id: " + id));
 
-        if (order.getStatus().equals("cancelled") || order.getStatus().equals("completed")) {
+        if (order.getStatus().equals("Cancelled") || order.getStatus().equals("Completed")) {
             throw new RuntimeException("Order has been cancelled or completed");
         }
 
-        order.setStatus("cancelled");
+        order.setStatus("Cancelled");
 
         // Trả lại số lượng sản phẩm vào kho
         order.getOrderItems().forEach(orderItem -> {
@@ -107,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
     public void completeOrder(String id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new IdInvalidExceptionHandler("Order not found with id: " + id));
-        order.setStatus("completed");
+        order.setStatus("Completed");
         orderRepository.save(order);
     }
 }

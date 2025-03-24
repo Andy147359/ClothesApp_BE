@@ -1,11 +1,7 @@
 package com.dtk.ClothesApp.service;
 
-import com.dtk.ClothesApp.domain.request.product.CreateProductRequest;
-import com.dtk.ClothesApp.domain.request.product.UpdateProductRequest;
 import com.dtk.ClothesApp.domain.response.Product.CreateProductResponse;
 import com.dtk.ClothesApp.domain.response.Product.ProductResponse;
-
-import jakarta.validation.Valid;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,7 +24,7 @@ public interface ProductService {
             String name, BigDecimal price, BigDecimal discountPrice, String description,
             Integer stock, String category, MultipartFile imageFile);
 
-    ProductResponse updateProductStock(String id, int stock);
+    void updateProductStock(String id, int stock);
 
     void deleteProduct(String id);
 }

@@ -13,10 +13,8 @@ public class CreateUserRequest {
     private String email;
 
     @NotBlank(message = "Password không được để trống")
-    @Size(min = 6, max = 20, message = "Password phải từ 6 đến 20 ký tự")
     private String password;
 
     @NotBlank(message = "Full name không được để trống")
-    @Size(max = 50, message = "Full name không được vượt quá 50 ký tự")
     private String fullName;
 }
